@@ -28,5 +28,16 @@ class TestTree(unittest.TestCase):
         T=Tree('a',T1,T2)
         self.assertEqual(str(T),'a(b(c,d),e(f,g))')
 
+    def test_eq(self):
+        T1=Tree('b',Tree('c'),Tree('d'))
+        T2=Tree('b',Tree('c'),Tree('d'))
+        self.assertEqual(T1,T2)
+    
+    def test_substitute(self):
+        T = Tree('+', Tree('7'), Tree('+', Tree('*', Tree('5'), Tree('X')), Tree('*', Tree('3'), Tree('*', Tree('X'), Tree('X')))))
+        t1 = Tree('*', Tree('5'), Tree('X'))
+        t2 = Tree('b')
+        self.assertEqual(T.substitute(t1, t2), Tree('+', Tree('7'), Tree('+', Tree('b'), Tree('*', Tree('3'), Tree('*', Tree('X'), Tree('X'))))))
+
 if __name__ == '__main__':
     unittest.main()
