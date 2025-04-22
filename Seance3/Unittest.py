@@ -39,5 +39,10 @@ class TestTree(unittest.TestCase):
         t2 = Tree('b')
         self.assertEqual(T.substitute(t1, t2), Tree('+', Tree('7'), Tree('+', Tree('b'), Tree('*', Tree('3'), Tree('*', Tree('X'), Tree('X'))))))
 
+    def test_evaluate(self):
+        #Pol = 7+5X+3X^2
+        Pol = Tree('+', Tree('7'), Tree('+', Tree('*', Tree('5'), Tree('X')), Tree('*', Tree('3'), Tree('*', Tree('X'), Tree('X')))))
+        self.assertEqual([Pol.evaluate(0), Pol.evaluate(5), Pol.evaluate(-3)], [7, 107, 19])
+
 if __name__ == '__main__':
     unittest.main()
