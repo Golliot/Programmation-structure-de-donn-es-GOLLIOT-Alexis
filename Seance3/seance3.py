@@ -1,12 +1,14 @@
 ##EXo 1
 from __future__ import annotations
 
+
+    
 class Tree :
 
     def __init__(self, label, *children):
         self.__label=label
         self.__children=children
-    
+
     def label(self):
         return self.__label
     
@@ -36,6 +38,13 @@ class Tree :
     def __eq__(self, T):
         return (self.label() == T.label() and self.children() == T.children())
     
+    def isFloat(self):
+        try:
+            float(self.label())
+            return True
+        except ValueError:
+            return False
+    
     #Chaque noeud qui n'est pas une feuille a 2 enfants: 
     #3x^2+5X+7 a pour représentation: +(7,+(*(5,X),*(3,*(X,X))))
     def deriv(self, var: str):
@@ -60,8 +69,10 @@ class Tree :
                 return self.child(1)
             if self.child(1) == Tree('0'):
                 return self.child(0)
-            if self.child(0).is_leaf() and self.child(1).is_leaf() and Tree('X') not in self.children():
+            if self.child(0).isFloat() and self.child(1).isFloat():
                 return Tree(str(float(self.child(0).label())+float(self.child(1).label())))
+            if self.child(0).is_leaf() and self.child(1).is_leaf() and Tree('X') not in self.children():
+                return Tree(str(self.child(0).label()) + '+' + str(self.child(1).label()))
         return Tree(self.label(), *(self.child(i).simplify_Sum() for i in range(self.nb_children())))
 
     def simplify_Mul(self):
@@ -72,8 +83,10 @@ class Tree :
                 return self.child(1)
             if self.child(1) == Tree('1'):
                 return self.child(0)
-            if self.child(0).is_leaf() and self.child(1).is_leaf() and Tree('X') not in self.children():
+            if self.child(0).isFloat() and self.child(1).isFloat():
                 return Tree(str(float(self.child(0).label())*float(self.child(1).label())))
+            if self.child(0).is_leaf() and self.child(1).is_leaf() and Tree('X') not in self.children():
+                return Tree(str(self.child(0).label()) + '*' + str(self.child(1).label()))
         return Tree(self.label(), *(self.child(i).simplify_Mul() for i in range(self.nb_children())))
     
     def simplify(self):
@@ -99,5 +112,3 @@ print(Pol)
 
 Pol_prime = Pol.deriv('X')
 print(Pol_prime.simplify())
-print(Pol.evaluate(5))
-
