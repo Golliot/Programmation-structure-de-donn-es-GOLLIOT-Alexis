@@ -54,6 +54,8 @@ class Tree :
             return t2
         return Tree(self.label(), *(self.child(i).substitute(t1, t2) for i in range(self.nb_children())))
         
+
+
 T1=Tree('b',Tree('c'),Tree('d'))
 T2=Tree('e',Tree('f'),Tree('g'))
 T=Tree('a',T1,T2)
@@ -63,7 +65,6 @@ print(str(T))
 #Pol = 7+5X+3X^2
 Pol = Tree('+', Tree('7'), Tree('+', Tree('*', Tree('5'), Tree('X')), Tree('*', Tree('3'), Tree('*', Tree('X'), Tree('X')))))
 print(str(Pol))
-print(str(Pol.deriv('X')))
 
-t=Tree('+', Tree('a'), Tree('X'))
-print(str(t.substitute(Tree('X'), Tree('b'))))
+Pol_prime = Pol.deriv('X')
+print(str(Pol_prime))
