@@ -1,8 +1,6 @@
 #Fonctions de hachage
 import matplotlib.pyplot as plt
 
-def listePremiersElements(L: list) -> list: #L est une liste de couples
-    return [L[i][0] for i in range(len(L))]
 
 def horner(var: str) -> int:
     h = 0
@@ -26,7 +24,7 @@ class Hashtable:
     def getValues(self):
         return self.__values
 
-    def put(self, key, value): #bien différencier l'argument value et la méthode values
+    def put(self, key, value):
         if self.__nbElements > 2*self.__length:
             self.resize()
         indice = self.__hashFun(key) % self.__length
